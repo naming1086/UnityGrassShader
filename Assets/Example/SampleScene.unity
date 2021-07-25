@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 518835354}
   - component: {fileID: 518835349}
   - component: {fileID: 518835355}
+  - component: {fileID: 518835356}
   m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Untagged
@@ -265,6 +266,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b184424150c82924bb96605ef1703855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &518835356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518835348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1867c16d71ffe4aaf7baecdc2ed386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!43 &703386203
@@ -755,8 +768,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f78da2c0728dcd84a879d75db6b871cc, type: 2}
   - {fileID: 2100000, guid: 1d0dc38ce62b8804691985d5bbbfcf5a, type: 2}
+  - {fileID: 2100000, guid: f78da2c0728dcd84a879d75db6b871cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

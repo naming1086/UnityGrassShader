@@ -57,5 +57,9 @@ public class PlayerInput : MonoBehaviour
 
 		cam.transform.position = transform.position + Quaternion.Euler(camRotX, camRotY, 0) * (camDistance * -Vector3.back);
 		cam.transform.LookAt(transform.position, Vector3.up);
+
+
+		// rotate player to face camera forwards
+		transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
 	}
 }
