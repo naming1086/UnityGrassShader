@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: ExampleGrass
   m_Shader: {fileID: 4800000, guid: 3b654ca723233664da6dd146df54e7a8, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _DISPLACEMENTENABLED_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -29,8 +29,8 @@ Material:
     - _BladeWidth: 0.05
     - _BladeWidthRandom: 0.5
     - _ColourRandom: 0.1
-    - _DisplacementEnabled: 0
-    - _DisplacementRadius: 0.5
+    - _DisplacementEnabled: 1
+    - _DisplacementRadius: 0.15
     - _DisplacementStrength: 1
     - _FadeDistance: 3
     - _MaxDistance: 20
