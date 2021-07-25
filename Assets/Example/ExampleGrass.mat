@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ExampleGrass
+  m_Shader: {fileID: 4800000, guid: 3b654ca723233664da6dd146df54e7a8, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _BendDelta: 0.2
+    - _BladeBendCurve: 2
+    - _BladeBendDistance: 0.38
+    - _BladeHeight: 0.6
+    - _BladeHeightRandom: 0.5
+    - _BladeWidth: 0.05
+    - _BladeWidthRandom: 0.5
+    - _ColourRandom: 0.1
+    - _DisplacementEnabled: 0
+    - _DisplacementRadius: 0.5
+    - _DisplacementStrength: 1
+    - _FadeDistance: 3
+    - _MaxDistance: 20
+    - _TessDensity: 100
+    - _WindSpeed: 50
+    - _WindStrength: 0.1
+    - _WindTintScale: 0.2
+    m_Colors:
+    - _AmbientColour: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+    - _BaseColour: {r: 0.1, g: 0.3, b: 0, a: 1}
+    - _TintColour: {r: 0.66300005, g: 0.32360715, b: 0.20521426, a: 1}
+    - _TipColour: {r: 0.7, g: 0.9, b: 0.4, a: 1}
+    - _WindDir: {r: 1, g: 0, b: 0.5, a: 0}
+  m_BuildTextureStacks: []
