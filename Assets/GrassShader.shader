@@ -228,13 +228,17 @@ Shader "Custom/GrassShader"
 					float forward = rand(pos.yyz) * _BladeBendDistance;
 
 					// wind
-					float xFac = pos.x * _WindDir.x;
-					float zFac = pos.z * _WindDir.z;
-					float3 wind = float3(
-						sin(_Time.x * _WindSpeed + xFac + zFac * 2 + pos.y * 2),
-						0,
-						cos(_Time.x * _WindSpeed + xFac * 2 + zFac + pos.y * 2)
-					) * _WindStrength * grassScale;
+					float3 wind = 0;
+					if (_WindStrength > 0)
+					{
+						float xFac = pos.x * _WindDir.x;
+						float zFac = pos.z * _WindDir.z;
+						wind = float3(
+							sin(_Time.x * _WindSpeed + xFac + zFac * 2 + pos.y * 2),
+							0,
+							cos(_Time.x * _WindSpeed + xFac * 2 + zFac + pos.y * 2)
+						) * _WindStrength * grassScale;
+					}
 
 					// tint mask
 					float tintMul = 1 - input[0].color.g;
