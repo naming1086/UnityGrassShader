@@ -33,6 +33,7 @@ Shader "Custom/GrassShader"
 		[Toggle] _DisplacementEnabled("Enable Player Displacement", Int) = 0
 		_DisplacementRadius("Displacement Radius", Float) = 0.5
 		_DisplacementStrength("Displacement Strength", Float) = 1
+		_DisplacementTintScale("Displacement Tint Scale", Float) = 1
 	}
 	
 	SubShader
@@ -120,6 +121,7 @@ Shader "Custom/GrassShader"
 				int _DisplacementEnabled;
 				float _DisplacementRadius;
 				float _DisplacementStrength;
+				float _DisplacementTintScale;
 			CBUFFER_END
 
 			uniform float3 _PlayerPosition;
@@ -234,6 +236,10 @@ Shader "Custom/GrassShader"
 						cos(_Time.x * _WindSpeed + xFac * 2 + zFac + pos.y * 2)
 					) * _WindStrength * grassScale;
 
+					// tint mask
+					float tintMul = 1 - input[0].color.g;
+					wind *= 1 - tintMul * (1 - _WindTintScale);
+
 					// player displacement
 					float3 displacement = 0;
 					if (_DisplacementEnabled == 1)
@@ -241,15 +247,12 @@ Shader "Custom/GrassShader"
 						float3 playerDist = distance(_PlayerPosition, worldPos);
 						float3 falloff = 1 - saturate(playerDist - _DisplacementRadius);
 						displacement = (worldPos - _PlayerPosition) * falloff * _DisplacementStrength;
+						displacement *= 1 - tintMul * (1 - _DisplacementTintScale);
 						wind *= 1 - falloff;
 					}
 
 					// per-blade random colour variation
 					float3 colOff = (float3(rand(pos.xyz), rand(pos.yzx), rand(pos.zxy)) * 2 - 1) * _ColourRandom;
-
-					// tint mask
-					float tintMul = 1 - input[0].color.g;
-					wind *= 1 - tintMul * (1 - _WindTintScale);
 
 					// construct geometry
 					for (int i = 0; i < BLADE_SEGMENTS; i++) {
