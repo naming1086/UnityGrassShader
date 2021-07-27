@@ -153,8 +153,9 @@ Shader "Custom/GrassShader"
 				float4 pos 		: SV_POSITION;
 				float2 uv 		: TEXCOORD0;
 				float3 worldPos : TEXCOORD1;
-				float3 colOff 	: TEXCOORD2;
-				float tintMul 	: TEXCOORD3;
+				float3 normal 	: TEXCOORD2;
+				float3 colOff 	: TEXCOORD3;
+				float  tintMul 	: TEXCOORD4;
 			};
 
 			// vertex shader
@@ -171,13 +172,14 @@ Shader "Custom/GrassShader"
 			}
 
 			// create vertex and transform to clip space
-			GrassData CreateVert(float3 pos, float3 offset, float3x3 transform, float2 uv, float3 colOff, float tintMul)
+			GrassData CreateVert(float3 pos, float3 offset, float3x3 transform, float2 uv, float3 normal, float3 colOff, float tintMul)
 			{
 				GrassData o;
 
 				o.pos = TransformObjectToHClip(pos + mul(transform, offset));
 				o.uv = uv;
 				o.worldPos = TransformObjectToWorld(pos + mul(transform, offset));
+				o.normal = normal;
 				o.colOff = colOff;
 				o.tintMul = tintMul;
 
@@ -267,12 +269,12 @@ Shader "Custom/GrassShader"
 						float3x3 transform = (i == 0) ? baseMatrix : tipMatrix;
 						float3 newPos = (i == 0) ? pos : pos + (wind + displacement) * t;
 
-						triStream.Append(CreateVert(newPos, float3( offset.x, offset.y, offset.z), transform, float2(0, t), colOff, tintMul));
-						triStream.Append(CreateVert(newPos, float3(-offset.x, offset.y, offset.z), transform, float2(1, t), colOff, tintMul));
+						triStream.Append(CreateVert(newPos, float3( offset.x, offset.y, offset.z), transform, float2(0, t), normal, colOff, tintMul));
+						triStream.Append(CreateVert(newPos, float3(-offset.x, offset.y, offset.z), transform, float2(1, t), normal, colOff, tintMul));
 					}
 
 					float3 tipPos = pos + wind + displacement;
-					triStream.Append(CreateVert(tipPos, float3(0.0f, forward, height), tipMatrix, float2(0.5f, 1.0f), colOff, tintMul));
+					triStream.Append(CreateVert(tipPos, float3(0.0f, forward, height), tipMatrix, float2(0.5f, 1.0f), normal, colOff, tintMul));
 
 					triStream.RestartStrip();
 				}
@@ -363,7 +365,7 @@ Shader "Custom/GrassShader"
 				{
 					float3 lighting = 0;
 
-					// main shadows
+					// main lighting
 					#if defined(SHADOWS_SCREEN)
 						half4 clipPos = TransformWorldToHClip(i.worldPos);
 						half4 shadowCoord = ComputeScreenPos(clipPos);
@@ -372,10 +374,10 @@ Shader "Custom/GrassShader"
 					#endif
 
 					Light light = GetMainLight(shadowCoord);
-					lighting += light.color * light.distanceAttenuation * light.shadowAttenuation;
+					lighting += light.color * saturate(dot(i.normal, light.direction)) * light.distanceAttenuation * light.shadowAttenuation;
 
 
-					// additional shadows
+					// additional lighting
 					int pixelLightCount = GetAdditionalLightsCount();
 					for (int li = 0; li < pixelLightCount; li++) {
 						#if defined(SHADOWS_SCREEN)
@@ -386,7 +388,7 @@ Shader "Custom/GrassShader"
 						#endif
 
 						Light light = GetAdditionalLight(li, i.worldPos, shadowCoord);
-						lighting += light.color * light.distanceAttenuation * light.shadowAttenuation;
+						lighting += light.color * saturate(dot(i.normal, light.direction)) * light.distanceAttenuation * light.shadowAttenuation;
 					}
 
 
