@@ -39,7 +39,9 @@ Shader.SetGlobalVector("_PlayerPosition", transform.position);
 ```
 
 ### Troubleshooting
-- Currently only works with URP <sub>(sorry!)</sub>
+- URP 11 (2021.1) or later required
+  - Change line [390](https://github.com/DougTy/UnityGrassShader/blob/2bb62ce2cb098833fb5f147982951bd8386614c3/Assets/GrassShader.shader#L390) to use older versions of URP without point light shadows:
+  - `Light light = GetAdditionalLight(li, i.worldPos); // removed shadowCoord`
 - After subdividing with ProBuilder, PolyBrush can sometimes become unresponsive
   - To fix this, remove the `PolyBrush Mesh` component from your mesh
   - This appears to be a PolyBrush/ProBuilder issue
